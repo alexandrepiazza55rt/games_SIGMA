@@ -339,7 +339,7 @@ body.shake .screen.active { animation: shake .09s linear 10; }
 .toast.out { opacity: 0; transform: translateY(-8px); }
 .toast.infraction { background: #3a1214; border-color: var(--red); color: #ffd0cc; font-weight: 600; }
 .toast.warn { background: #3a2410; border-color: var(--orange); color: #ffd3a6; }
-.toast.radio { border-color: var(--blue); }
+.toast.radio { border-color: var(--blue); border-width: 2px; background: #13243a; font-size: 15px; }
 
 /* ---------------- responsivo ---------------- */
 @media (max-width: 900px) {

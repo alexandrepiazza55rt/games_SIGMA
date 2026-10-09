@@ -54,7 +54,21 @@
     beep: function () { tone(1320, 'sine', 0.12, 0.25); tone(1760, 'sine', 0.12, 0.25, 0.13); },
     detector: function () { for (var i = 0; i < 6; i++) tone(2400, 'square', 0.06, 0.18, i * 0.1); },
     warn: function () { tone(220, 'sawtooth', 0.3, 0.25); tone(180, 'sawtooth', 0.3, 0.25, 0.32); },
-    radio: function () { noise(0.15, 0.25, 'bandpass', 1800, 0, 2); tone(1000, 'sine', 0.08, 0.2, 0.16); },
+    // Rádio HT: chiado de estática que abre o canal, bip de câmbio e cauda de squelch.
+    radio: function () {
+      if (!ctx) return;
+      var t = ctx.currentTime, src = ctx.createBufferSource(), bp = ctx.createBiquadFilter(), g = ctx.createGain();
+      src.buffer = noiseBuffer(0.75);
+      bp.type = 'bandpass'; bp.frequency.value = 1900; bp.Q.value = 0.9;
+      g.gain.setValueAtTime(0.0001, t);
+      for (var i = 0; i < 14; i++) g.gain.setValueAtTime(0.18 + Math.random() * 0.35, t + 0.02 + i * 0.03);
+      g.gain.setValueAtTime(0.0001, t + 0.45);
+      g.gain.setValueAtTime(0.25, t + 0.62);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.72);
+      src.connect(bp); bp.connect(g); g.connect(master); src.start(t); src.stop(t + 0.75);
+      tone(1400, 'square', 0.07, 0.12, 0.46);
+      tone(1050, 'square', 0.08, 0.12, 0.53);
+    },
     infraction: function () { tone(140, 'square', 0.18, 0.25); tone(140, 'square', 0.18, 0.25, 0.22); },
     saved: function () { [523, 659, 784].forEach(function (f, i) { tone(f, 'triangle', 0.18, 0.3, i * 0.09); }); },
     arcSmall: function () { noise(0.6, 0.9, 'lowpass', 3000); tone(60, 'sine', 0.5, 0.9, 0, 30); },

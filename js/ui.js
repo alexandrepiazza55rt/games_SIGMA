@@ -343,15 +343,21 @@
     f.insertBefore(div, f.firstChild);
   }
 
+  // Mensagens de rádio ficam 9 s na tela; as demais, 4 s. Não capturam toques, para não bloquear o diagrama.
+  // Quando falta espaço, sai primeiro a notificação mais antiga que não seja de rádio.
   function toast(msg, type) {
     var t = document.createElement('div');
     t.className = 'toast ' + (type || '');
     t.textContent = msg;
     var box = $('#toasts');
-    while (box.children.length >= 2) box.removeChild(box.firstChild);
+    while (box.children.length >= 3) {
+      var old = box.querySelector('.toast:not(.radio)') || box.firstChild;
+      box.removeChild(old);
+    }
     box.appendChild(t);
-    setTimeout(function () { t.classList.add('out'); }, 3400);
-    setTimeout(function () { t.remove(); }, 3900);
+    var life = type === 'radio' ? 9000 : 4000;
+    setTimeout(function () { t.classList.add('out'); }, life);
+    setTimeout(function () { t.remove(); }, life + 450);
   }
 
   function run(events) {
@@ -479,7 +485,7 @@
       $('#exec-log').appendChild(row);
       if (e.type === 'infraction') A.play('infraction'); else if (e.sound) A.play(e.sound);
       if (e.type === 'radio') pulse(128);
-      setTimeout(step, e.type === 'radio' ? 1900 : 1300);
+      setTimeout(step, e.type === 'radio' ? 3800 : 1600);
     }
     setTimeout(step, 900);
   }
