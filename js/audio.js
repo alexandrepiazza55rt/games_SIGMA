@@ -75,7 +75,18 @@
       for (var i = 0; i < 10; i++) noise(0.04, 0.6, 'highpass', 5000, Math.random() * 1.2);
     },
     boom: function () { tone(40, 'sine', 2.0, 1.0, 0, 18); noise(1.8, 1.0, 'lowpass', 1200); },
-    flatline: function () { tone(988, 'sine', 2.8, 0.25, 0.6); },
+    // "Piiiii" do monitor cardíaco: tom contínuo que só some no fim.
+    flatline: function () {
+      if (!ctx) return;
+      var t = ctx.currentTime, o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sine'; o.frequency.value = 1000;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.45, t + 0.03);
+      g.gain.setValueAtTime(0.45, t + 3.6);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 4.2);
+      o.connect(g); g.connect(master); o.start(t); o.stop(t + 4.3);
+    },
+    monitor: function () { tone(1000, 'sine', 0.09, 0.3); },
     win: function () { [523, 659, 784, 1047].forEach(function (f, i) { tone(f, 'triangle', 0.35, 0.35, i * 0.12); }); },
     tick: function () { tone(1800, 'sine', 0.02, 0.05); }
   };
@@ -98,10 +109,24 @@
     }
   }
 
-  function heartbeat(on, bpm) {
+  // Batimento "tum-tum" + bip de monitor. Frequências acima de 80 Hz e um estalo filtrado para
+  // que o som apareça também na caixinha do celular. onBeat sincroniza o traçado de ECG da tela.
+  function thump(when, peak) {
+    tone(150, 'sine', 0.13, peak, when, 70);
+    tone(95, 'triangle', 0.16, peak * 0.8, when, 50);
+    noise(0.05, peak * 0.5, 'lowpass', 700, when);
+  }
+  function heartbeat(on, bpm, onBeat) {
     clearInterval(heartTimer); heartTimer = null;
-    if (!on || !ctx) return;
-    var beat = function () { tone(55, 'sine', 0.14, 0.9, 0, 40); tone(50, 'sine', 0.12, 0.6, 0.18, 35); };
+    if (!on) return;
+    var beat = function () {
+      if (ctx && !muted) {
+        thump(0, 0.9);
+        thump(0.2, 0.6);
+        tone(1000, 'sine', 0.09, 0.22);
+      }
+      if (onBeat) onBeat();
+    };
     beat();
     heartTimer = setInterval(beat, 60000 / (bpm || 90));
   }

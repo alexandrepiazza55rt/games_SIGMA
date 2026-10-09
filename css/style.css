@@ -64,6 +64,22 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .logo .ou { font-size: .32em; color: var(--dim); font-family: var(--font); font-weight: 400; text-transform: none; margin: 4px 0 2px 4px; }
 .logo .morre { color: var(--red); text-shadow: 0 0 24px rgba(255, 59, 48, .45); }
 .tag { color: #c4cfdb; font-size: 17px; line-height: 1.5; margin: 0 0 22px; }
+.name-box { display: flex; flex-direction: column; gap: 6px; margin: 0 0 12px; max-width: 520px; }
+.name-box span { font-family: var(--mono); font-size: 12px; color: var(--yellow); letter-spacing: 1.2px; text-transform: uppercase; }
+.name-box input {
+  font: inherit; font-size: 18px; color: var(--text); background: var(--panel); border: 2px solid var(--line);
+  border-radius: 12px; padding: 13px 14px; outline: none; transition: border-color .15s;
+}
+.name-box input:focus { border-color: var(--yellow); }
+.name-box input.err { border-color: var(--red); animation: nudge .35s; }
+@keyframes nudge { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+.name-err { color: #ff8b85; font-size: 14px; margin: -4px 0 12px; }
+.who { font-family: var(--mono); font-size: 13px; color: #c4cfdb; margin: 4px 0 8px; }
+.ecg-box { position: relative; background: #050a07; border: 1px solid #1d3b2a; border-radius: 10px; overflow: hidden; margin: 8px 0 12px; }
+.ecg-box canvas { display: block; width: 100%; height: auto; }
+.ecg-box.dead { border-color: #5a1c1c; background: #0a0505; margin-top: 0; }
+.ecg-bpm { position: absolute; right: 10px; top: 6px; font-family: var(--mono); font-size: 13px; color: var(--green); animation: blinkhb .8s steps(2) infinite; }
+@keyframes blinkhb { 50% { opacity: .35; } }
 #btn-play { flex: 1 1 260px; max-width: 360px; }
 .menu-btns { display: flex; flex-wrap: wrap; gap: 10px; }
 #btn-qr { flex: 0 1 auto; }
@@ -260,11 +276,6 @@ rect.hit { stroke-width: 0; }
 .exec-card { text-align: center; position: relative; overflow: hidden; }
 .exec-card h2 { font-family: var(--display); font-size: 34px; letter-spacing: 2px; margin: 6px 0 0; }
 .exec-sub { margin: 4px 0 12px; }
-.exec-pulse { width: 18px; height: 18px; border-radius: 50%; background: var(--red); margin: 0 auto; animation: pulse 0.7s infinite; }
-@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 59, 48, .7); } 100% { box-shadow: 0 0 0 22px rgba(255, 59, 48, 0); } }
-.bar { height: 4px; background: #222d3b; border-radius: 4px; overflow: hidden; margin-bottom: 14px; }
-.bar i { display: block; height: 100%; width: 40%; background: var(--yellow); animation: load 1.4s ease-in-out infinite; }
-@keyframes load { 0% { transform: translateX(-100%); } 100% { transform: translateX(260%); } }
 #exec-log { display: flex; flex-direction: column; gap: 8px; text-align: left; }
 .xl { font-size: 14px; padding: 9px 11px; border-radius: 10px; background: #1b2430; animation: rise .35s ease-out; }
 .xl.radio { border-left: 3px solid var(--blue); } .xl.radio b { color: var(--blue); }
@@ -276,7 +287,6 @@ rect.hit { stroke-width: 0; }
 .overlay.death { background: radial-gradient(ellipse at center, rgba(60, 0, 0, .85), rgba(0, 0, 0, .95)); }
 .death-card { border-color: #5a1c1c; text-align: center; max-width: 560px; animation: slam .5s cubic-bezier(.2, 1.6, .4, 1); }
 @keyframes slam { from { transform: scale(1.4); opacity: 0; } }
-.dc-skull { font-size: 54px; }
 .death-card h2 { font-family: var(--display); font-size: clamp(44px, 12vw, 70px); color: var(--red); margin: 0; letter-spacing: 2px; text-shadow: 0 0 30px rgba(255, 59, 48, .6); }
 .death-card h3 { color: #ffd3a6; font-family: var(--mono); font-size: 14px; letter-spacing: 1px; }
 .dc-energy { display: inline-block; font-family: var(--mono); background: #3a0f0f; color: #ff8b85; border-radius: 6px; padding: 3px 10px; font-size: 13px; }

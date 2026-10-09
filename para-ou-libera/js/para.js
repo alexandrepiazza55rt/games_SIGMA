@@ -30,8 +30,26 @@
 
   // ---------------------------------------------------------------- jogo
 
+  function getName() {
+    var v = $('#player-name').value.trim();
+    if (!v) { try { v = (localStorage.getItem('sep-nome') || '').trim(); } catch (e) { v = ''; } }
+    return v;
+  }
+  function requireName() {
+    var el = $('#player-name'), ok = getName().length >= 2;
+    $('#name-err').classList.toggle('hidden', ok);
+    if (!ok) { el.classList.remove('err'); void el.offsetWidth; el.classList.add('err'); el.focus(); }
+    return ok;
+  }
+  function whoLine() {
+    var d = new Date();
+    return '👷 ' + esc(getName() || 'Sem nome') + ' · ' + d.toLocaleDateString('pt-BR') + ' ' +
+      d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  }
+
   function start() {
     A.init();
+    if (!requireName()) return;
     round = new PL.Round(PL.cards);
     paused = false; busy = false;
     $('#last').textContent = '';
@@ -194,12 +212,14 @@
     var dead = round.lives <= 0;
     A.play(dead ? 'flatline' : 'win');
     var acc = round.accuracy();
-    var best = loadBest(), record = !best || round.score > best.score;
+    var best = loadBest(), record = round.score > 0 && (!best || round.score > best.score);
     if (record) saveBest({ score: round.score, acc: acc });
     var mistakes = round.mistakes();
     var html = '<div class="hazard"></div><div class="end-head' + (dead ? ' dead' : '') + '">' +
-      '<div class="e-icon">' + (dead ? '💀' : '🏁') + '</div>' +
-      '<h2>' + (dead ? 'TURNO ENCERRADO: 3 ACIDENTES' : 'FIM DO TURNO') + '</h2>' +
+      (dead ? '<div class="flatline"></div>' : '<div class="e-icon">🏁</div>') +
+      '<h2' + (dead ? ' class="glitch" data-t="GAME OVER"' : '') + '>' + (dead ? 'GAME OVER' : 'FIM DO TURNO') + '</h2>' +
+      (dead ? '<div class="end-sub">3 acidentes no turno</div>' : '') +
+      '<div class="who">' + whoLine() + '</div>' +
       '<div class="end-score">' + round.score + (record ? ' 🏆' : '') + '</div>' +
       '<div class="end-rank">' + esc(PL.rank(round.score)) + '</div></div>' +
       '<div class="end-stats"><div><b>' + acc + '%</b><span>acerto</span></div><div><b>' + round.answered + '</b><span>cartas</span></div>' +
@@ -289,6 +309,14 @@
     this.textContent = m ? '🔇' : '🔊';
   });
   try { if (localStorage.getItem('dom-muted')) { A.setMuted(true); $('#pl-sound').textContent = '🔇'; } } catch (e) { /* sem storage */ }
+
+  var nameEl = $('#player-name');
+  try { nameEl.value = localStorage.getItem('sep-nome') || ''; } catch (e) { /* sem storage */ }
+  nameEl.addEventListener('input', function () {
+    try { localStorage.setItem('sep-nome', nameEl.value.trim()); } catch (e) { /* sem storage */ }
+    if (nameEl.value.trim().length >= 2) { $('#name-err').classList.add('hidden'); nameEl.classList.remove('err'); }
+  });
+  nameEl.addEventListener('keydown', function (ev) { if (ev.key === 'Enter') start(); });
 
   renderMenu();
   window.PL.ui = { start: start, round: function () { return round; } };

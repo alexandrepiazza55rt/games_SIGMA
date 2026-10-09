@@ -25,6 +25,29 @@
   }
   function loadProgress() { try { return JSON.parse(localStorage.getItem('dom-progress') || '{}') || {}; } catch (e) { return {}; } }
   function saveProgress(p) { try { localStorage.setItem('dom-progress', JSON.stringify(p)); } catch (e) { /* sem storage */ } }
+  function getName() {
+    var el = $('#player-name');
+    var v = el ? el.value.trim() : '';
+    if (!v) { try { v = (localStorage.getItem('sep-nome') || '').trim(); } catch (e) { v = ''; } }
+    return v;
+  }
+  // Exige o nome do aluno antes de jogar; devolve false e destaca o campo se estiver vazio.
+  function requireName() {
+    var el = $('#player-name'), ok = getName().length >= 2;
+    $('#name-err').classList.toggle('hidden', ok);
+    if (!ok) {
+      show('screen-menu');
+      el.classList.remove('err'); void el.offsetWidth; el.classList.add('err');
+      el.focus();
+      el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+    return ok;
+  }
+  function whoLine() {
+    var d = new Date();
+    return '👷 ' + esc(getName() || 'Sem nome') + ' · ' + d.toLocaleDateString('pt-BR') + ' ' +
+      d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  }
   function starStr(n) { return '★★★'.slice(0, n) + '☆☆☆'.slice(0, 3 - n); }
   function timeLeft() { return level.time - elapsed; }
 
@@ -78,7 +101,7 @@
     closeModal();
     $('#xraybar').classList.add('hidden');
     $('#overlay').classList.add('hidden');
-    $('#hud-title').textContent = String(levelIdx + 1).padStart(2, '0') + ' · ' + level.title;
+    $('#hud-title').textContent = String(levelIdx + 1).padStart(2, '0') + ' · ' + level.title + ' · 👷 ' + getName();
     show('screen-game');
     feed({ type: 'info', msg: level.objective, who: 'OS' });
     if (level.hints) feed({ type: 'info', msg: 'Toque nos equipamentos e trechos do diagrama para agir. As tensões não aparecem: você precisa MEDIR.', who: 'Dica' });
@@ -436,10 +459,13 @@
     var res = game.release();
     var ov = $('#overlay');
     ov.className = 'overlay exec';
-    ov.innerHTML = '<div class="card exec-card"><div class="exec-pulse"></div><h2>EQUIPE EM CAMPO</h2>' +
-      '<p class="exec-sub">Ana, Bruno e Carlos entraram na zona de trabalho.</p><div class="bar"><i></i></div><div id="exec-log"></div></div>';
+    ov.innerHTML = '<div class="card exec-card"><h2>EQUIPE EM CAMPO</h2>' +
+      '<p class="exec-sub">Ana, Bruno e Carlos entraram na zona de trabalho.</p>' +
+      '<div class="ecg-box"><canvas id="ecg" width="480" height="90"></canvas><span id="ecg-bpm" class="ecg-bpm">♥ 84</span></div>' +
+      '<div id="exec-log"></div></div>';
     A.hum(false);
-    A.heartbeat(true, 84);
+    ecg = makeECG($('#ecg'));
+    pulse(84);
     var items = res.timeline, i = 0;
     function step() {
       if (i >= items.length) return;
@@ -452,10 +478,52 @@
       row.innerHTML = (e.who ? '<b>' + esc(e.who) + ':</b> ' : e.type === 'infraction' ? '<b>⚠</b> ' : '') + esc(e.msg);
       $('#exec-log').appendChild(row);
       if (e.type === 'infraction') A.play('infraction'); else if (e.sound) A.play(e.sound);
-      if (e.type === 'radio') A.heartbeat(true, 128);
+      if (e.type === 'radio') pulse(128);
       setTimeout(step, e.type === 'radio' ? 1900 : 1300);
     }
     setTimeout(step, 900);
+  }
+
+  // ---------------------------------------------------------------- monitor cardíaco
+
+  var ecg = null;
+
+  function pulse(bpm) {
+    var el = $('#ecg-bpm');
+    if (el) el.textContent = '♥ ' + bpm;
+    A.heartbeat(true, bpm, function () { if (ecg) ecg.beat(); });
+  }
+
+  // Traçado de ECG rolando no canvas; beat() desenha um complexo QRS, flat() zera a linha.
+  function makeECG(cv) {
+    var c = cv.getContext('2d'), W = cv.width, H = cv.height, mid = H * 0.6;
+    var ys = [], queue = [], flat = false, x = 0;
+    for (var i = 0; i < W; i++) ys.push(0);
+    var QRS = [0, -3, -5, -3, 0, 2, 4, -34, 30, -8, 0, 0, -4, -7, -8, -7, -4, 0];
+    function frame() {
+      if (!cv.isConnected) return;
+      for (var k = 0; k < 3; k++) {
+        ys[x] = flat ? 0 : (queue.length ? queue.shift() : (Math.random() - 0.5) * 1.2);
+        x = (x + 1) % W;
+      }
+      c.clearRect(0, 0, W, H);
+      c.strokeStyle = 'rgba(46,204,113,.12)'; c.lineWidth = 1;
+      for (var g = 0; g < W; g += 20) { c.beginPath(); c.moveTo(g, 0); c.lineTo(g, H); c.stroke(); }
+      c.strokeStyle = flat ? '#ff3b30' : '#2ecc71'; c.lineWidth = 2.5; c.shadowColor = c.strokeStyle; c.shadowBlur = 8;
+      c.beginPath();
+      for (var j = 0; j < W; j++) {
+        var idx = (x + j) % W, y = mid + ys[idx];
+        if (j === 0) c.moveTo(j, y); else c.lineTo(j, y);
+      }
+      c.stroke();
+      c.shadowBlur = 0;
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+    return {
+      beat: function () { if (!flat) queue = queue.concat(QRS); },
+      flat: function () { flat = true; queue = []; }
+    };
   }
 
   // ---------------------------------------------------------------- morte
@@ -463,6 +531,7 @@
   function die(d) {
     busy = true;
     stopGame();
+    if (ecg) ecg.flat();
     var p = loadProgress(); p.deaths = (p.deaths || 0) + 1; saveProgress(p);
     var fx = $('#fx');
     fx.className = 'fx ' + d.kind;
@@ -475,8 +544,9 @@
       var ov = $('#overlay');
       ov.className = 'overlay death';
       ov.innerHTML = '<div class="card death-card">' +
-        '<div class="dc-skull">' + (d.kind === 'sync' ? '💥' : '💀') + '</div>' +
-        '<h2 class="glitch" data-t="' + (d.kind === 'sync' ? 'DESASTRE' : 'VOCÊ MORREU') + '">' + (d.kind === 'sync' ? 'DESASTRE' : 'VOCÊ MORREU') + '</h2>' +
+        '<div class="ecg-box dead"><canvas id="ecg-dead" width="480" height="70"></canvas></div>' +
+        '<h2 class="glitch" data-t="GAME OVER">GAME OVER</h2>' +
+        '<div class="who">' + whoLine() + '</div>' +
         '<h3>' + esc(d.title) + '</h3>' +
         (d.energy ? '<div class="dc-energy">' + esc(d.energy) + '</div>' : '') +
         '<p>' + esc(d.msg) + '</p>' +
@@ -484,6 +554,8 @@
         '<div class="refs">📖 ' + esc(d.ref) + (d.caseRef ? '<br>📁 Caso real: ' + esc(d.caseRef) : '') + '</div>' +
         '<div class="btns"><button class="act primary" data-go="retry">↻ Tentar de novo</button>' +
         '<button class="act" data-go="xray">🩻 Raio-X do diagrama</button><button class="act ghost" data-go="menu">Menu</button></div></div>';
+      var dead = makeECG($('#ecg-dead'));
+      dead.flat();
     }, d.kind === 'shock' ? 1500 : 1800);
   }
 
@@ -551,6 +623,7 @@
     ov.className = 'overlay win';
     ov.innerHTML = '<div class="card win-card">' +
       '<div class="win-stars">' + starStr(sc.stars) + '</div>' +
+      '<div class="who">' + whoLine() + '</div>' +
       '<h2>' + (inf.length ? 'SOBREVIVEU… MAS' : 'SERVIÇO PERFEITO') + '</h2>' +
       '<p class="win-msg">' + esc(level.winMsg) + '</p>' +
       '<div class="score-grid"><span>Base</span><b>1000</b><span>Infrações (' + inf.length + ' × 150)</span><b class="neg">−' + sc.penalty + '</b>' +
@@ -602,7 +675,7 @@
     var go = t.closest('[data-go]');
     if (go) { onGo(go.dataset.go); return; }
     var lv = t.closest('.lvl');
-    if (lv) { A.init(); openBrief(+lv.dataset.i); return; }
+    if (lv) { A.init(); if (requireName()) openBrief(+lv.dataset.i); return; }
     var a = t.closest('[data-act]');
     if (a && !a.disabled) { onAction(a.dataset.act, a.dataset.arg); return; }
     if (!game || busy || game.s.over || !$('#screen-game').classList.contains('active')) return;
@@ -624,6 +697,7 @@
   $('#btn-quit').addEventListener('click', function () { onGo('menu'); });
   $('#btn-play').addEventListener('click', function () {
     A.init();
+    if (!requireName()) return;
     var p = loadProgress();
     var i = SEP.levels.findIndex(function (L) { return !p[L.id]; });
     openBrief(i < 0 ? 0 : i);
@@ -645,6 +719,14 @@
     this.textContent = m ? '🔇' : '🔊';
   });
   try { if (localStorage.getItem('dom-muted')) { A.setMuted(true); $('#btn-sound').textContent = '🔇'; } } catch (e) { /* sem storage */ }
+
+  var nameEl = $('#player-name');
+  try { nameEl.value = localStorage.getItem('sep-nome') || ''; } catch (e) { /* sem storage */ }
+  nameEl.addEventListener('input', function () {
+    try { localStorage.setItem('sep-nome', nameEl.value.trim()); } catch (e) { /* sem storage */ }
+    if (nameEl.value.trim().length >= 2) { $('#name-err').classList.add('hidden'); nameEl.classList.remove('err'); }
+  });
+  nameEl.addEventListener('keydown', function (ev) { if (ev.key === 'Enter') $('#btn-play').click(); });
 
   renderMenu();
   window.SEP.ui = { startLevel: startLevel, openBrief: openBrief, game: function () { return game; } };
