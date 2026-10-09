@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Desenergiza ou Morre</title>
+  <meta name="description" content="Jogo de treinamento NR-10 SEP: desenergize a instalação do jeito certo — ou morra tentando.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- MENU -->
+  <section id="screen-menu" class="screen active">
+    <div class="menu-wrap">
+      <div class="hazard"></div>
+      <p class="kicker">NR-10 · SEP · Treinamento</p>
+      <h1 class="logo"><span>DESENERGIZA</span><span class="ou">ou</span><span class="morre glitch" data-t="MORRE">MORRE</span></h1>
+      <p class="tag">Você é o executante. Uma manobra errada e o arco elétrico não perdoa.<br>Siga as 6 etapas — ou vire estatística.</p>
+      <button id="btn-play" class="act primary big">⚡ ASSUMIR O TURNO</button>
+      <div id="rank" class="rank"></div>
+      <div id="levels" class="levels"></div>
+      <details class="howto">
+        <summary>Como jogar</summary>
+        <ul>
+          <li>Toque nos <b>disjuntores (52)</b>, <b>seccionadoras (89)</b> e <b>trechos</b> do diagrama para agir.</li>
+          <li>O diagrama <b>não mostra</b> onde tem tensão. Você precisa <b>medir</b> — com detector testado.</li>
+          <li><b>Disjuntor</b> interrompe carga. <b>Seccionadora</b> só se manobra sem carga.</li>
+          <li>Desligar não é desenergizar: seccionar → bloquear → constatar → aterrar → proteger → sinalizar.</li>
+          <li>Quando achar que está seguro, <b>LIBERE A EQUIPE</b>. Aí a verdade aparece.</li>
+          <li>Errou? Veja o <b>Raio-X</b> para entender de onde veio a energia.</li>
+        </ul>
+      </details>
+      <p class="foot">Baseado no curso complementar NR-10 SEP (Portaria MTE nº 737/2026) · Módulos 2, 4, 8, 17 e 18</p>
+    </div>
+  </section>
+
+  <!-- BRIEFING -->
+  <section id="screen-brief" class="screen">
+    <div class="brief-wrap">
+      <div class="hazard"></div>
+      <p id="brief-num" class="kicker"></p>
+      <h2 id="brief-title" class="brief-title"></h2>
+      <p id="brief-place" class="brief-place"></p>
+      <p id="brief-text" class="brief-text"></p>
+      <div class="brief-obj"><b>Ordem de serviço</b><span id="brief-obj"></span></div>
+      <div class="brief-meta">⏱ Meta de tempo: <b id="brief-time"></b> <span>(tempo dá bônus — a pressa nunca te salva)</span></div>
+      <div class="btns">
+        <button id="btn-start" class="act primary big">ENTRAR NA SUBESTAÇÃO</button>
+        <button id="btn-brief-back" class="act ghost">Voltar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOGO -->
+  <section id="screen-game" class="screen">
+    <header class="hud">
+      <button id="btn-quit" class="hud-btn" aria-label="Menu">☰</button>
+      <div id="hud-title" class="hud-title"></div>
+      <div class="hud-stat" title="Tempo restante para bônus">⏱ <b id="hud-time">00:00</b></div>
+      <div class="hud-stat inf" title="Infrações">⚠ <b id="hud-inf">0</b></div>
+      <div class="hud-stat bonus" title="Bônus de segurança">★ <b id="hud-bonus">0</b></div>
+      <button id="btn-sound" class="hud-btn" aria-label="Som">🔊</button>
+    </header>
+    <div class="game-body">
+      <main class="board">
+        <svg id="diagram" viewBox="0 0 900 540" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Diagrama unifilar"></svg>
+        <div class="legend"><span class="lg closed">■ fechado</span><span class="lg open">■ aberto</span><span>🔒 cadeado</span><span class="lg gnd">⏚ aterrado</span><span class="lg cov">▬ manta</span></div>
+      </main>
+      <aside class="panel">
+        <div id="sheet" class="sheet hidden"></div>
+        <div id="actions" class="actions"></div>
+        <div id="checklist" class="checklist hidden"></div>
+        <div class="feed-h">Rádio / registro</div>
+        <div id="feed" class="feed"></div>
+      </aside>
+    </div>
+    <div id="xraybar" class="xraybar hidden">
+      <span>🩻 Raio-X: <b class="r">vermelho</b> = energizado · <b class="y">amarelo</b> = induzida · cinza = sem tensão</span>
+      <button class="act primary" data-go="retry">↻ Tentar de novo</button>
+      <button class="act ghost" data-go="menu">Menu</button>
+    </div>
+  </section>
+
+  <div id="modal" class="modal hidden"></div>
+  <div id="overlay" class="overlay hidden"></div>
+  <div id="fx" class="fx hidden"></div>
+  <canvas id="fxc" class="fxc"></canvas>
+  <div id="toasts" class="toasts"></div>
+
+  <script src="js/engine.js"></script>
+  <script src="js/levels.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/ui.js"></script>
+</body>
+</html>
