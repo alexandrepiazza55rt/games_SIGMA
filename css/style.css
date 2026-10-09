@@ -81,6 +81,13 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @keyframes gl1 { 0%, 92%, 100% { transform: none; opacity: 0; } 93% { transform: translate(-4px, -1px); opacity: .8; } 96% { transform: translate(3px, 1px); opacity: .8; } }
 @keyframes gl2 { 0%, 88%, 100% { transform: none; opacity: 0; } 89% { transform: translate(4px, 1px); opacity: .8; } 94% { transform: translate(-3px, 0); opacity: .8; } }
 
+.new-game { display: grid; gap: 2px; margin-top: 16px; padding: 14px 16px; border-radius: 14px; text-decoration: none; color: var(--text);
+  background: linear-gradient(90deg, rgba(255, 59, 48, .14), rgba(46, 204, 113, .14)); border: 1px solid #3a4a5e; transition: transform .1s, border-color .15s; }
+.new-game:hover { transform: translateX(3px); border-color: var(--yellow); }
+.ng-tag { font-family: var(--mono); font-size: 11px; color: var(--yellow); letter-spacing: 1.5px; }
+.ng-t { font-family: var(--display); font-size: 24px; letter-spacing: .5px; }
+.ng-t .r { color: var(--red); } .ng-t .g { color: var(--green); }
+.ng-d { font-size: 13px; color: var(--dim); }
 .rank { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 26px 0 12px; font-family: var(--mono); font-size: 13px; color: var(--dim); }
 .rank .rank-name { color: var(--yellow); }
 .rank .deaths { color: #ff8b85; }

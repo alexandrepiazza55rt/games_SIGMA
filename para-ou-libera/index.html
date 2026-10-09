@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Para ou Libera</title>
+  <meta name="description" content="NR-10 SEP: condição impeditiva ou serviço liberado? Decida rápido — arraste a carta.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="css/para.css">
+</head>
+<body class="pl">
+  <!-- MENU -->
+  <section id="pl-menu" class="screen active">
+    <div class="menu-wrap">
+      <div class="hazard"></div>
+      <p class="kicker">NR-10 · SEP · Condições impeditivas</p>
+      <h1 class="logo pl-logo"><span class="w-para">PARA</span><span class="ou">ou</span><span class="w-lib">LIBERA</span></h1>
+      <p class="tag">Cada carta é uma situação real de campo. Você tem segundos para decidir:<br><b>condição impeditiva</b> ou <b>serviço liberado</b>?</p>
+      <div class="how">
+        <div class="how-i para"><span>👈</span><b>PARA</b><small>arraste para a esquerda<br>ou tecla ←</small></div>
+        <div class="how-i libera"><span>👉</span><b>LIBERA</b><small>arraste para a direita<br>ou tecla →</small></div>
+      </div>
+      <ul class="rules">
+        <li>🪖 <b>3 capacetes.</b> Liberou o que era pra parar? Acidente — perde um.</li>
+        <li>⏸ Parou o que estava certo? Ninguém morre, mas a produção perde <b>5 s</b>.</li>
+        <li>🔥 Acertos seguidos multiplicam os pontos até <b>×4</b>. Respondeu rápido? <b>+50</b>.</li>
+        <li>⌛ O pavio da carta queima. Hesitar custa o combo.</li>
+      </ul>
+      <button id="pl-start" class="act primary big">✋ ASSUMIR O TURNO ✅</button>
+      <div id="pl-best" class="rank"></div>
+      <a class="other-game" href="../index.html">⚡ Outro jogo: <b>Desenergiza ou Morre</b> →</a>
+      <p class="foot">Baseado no curso complementar NR-10 SEP (Portaria MTE nº 737/2026) · Módulos 3 a 9</p>
+    </div>
+  </section>
+
+  <!-- JOGO -->
+  <section id="pl-game" class="screen">
+    <header class="hud">
+      <button id="pl-quit" class="hud-btn" aria-label="Sair">✕</button>
+      <div class="hud-stat" title="Tempo de turno">⏱ <b id="h-time">1:15</b></div>
+      <div class="hud-lives" id="h-lives" title="Capacetes">🪖🪖🪖</div>
+      <div class="hud-stat score" title="Pontos">★ <b id="h-score">0</b></div>
+      <div class="hud-combo" id="h-combo"></div>
+      <button id="pl-sound" class="hud-btn" aria-label="Som">🔊</button>
+    </header>
+    <div class="arena">
+      <div class="stack">
+        <div class="pl-card back"></div>
+        <div id="card" class="pl-card"></div>
+      </div>
+      <div class="fuse" aria-hidden="true"><i id="fuse"></i></div>
+      <div class="choices">
+        <button id="b-para" class="ch para">✋ PARA</button>
+        <button id="b-lib" class="ch libera">LIBERA ✅</button>
+      </div>
+      <div id="last" class="last"></div>
+    </div>
+  </section>
+
+  <!-- FIM -->
+  <section id="pl-end" class="screen">
+    <div class="menu-wrap" id="end-body"></div>
+  </section>
+
+  <div id="modal" class="modal hidden"></div>
+  <div id="flash" class="pl-flash"></div>
+  <div id="floats" class="floats"></div>
+
+  <script src="../js/audio.js"></script>
+  <script src="js/cards.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/para.js"></script>
+</body>
+</html>

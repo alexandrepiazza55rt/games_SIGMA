@@ -23,6 +23,17 @@ Também dá para abrir `index.html` no navegador (funciona direto do arquivo, se
 | 4 | Retorno pelo Trafo | Retorno pelo secundário e teste do detector (Mód. 4) | Detector com defeito; COS fecha 52-3 à distância |
 | 5 | Devolução | Reenergização na ordem inversa e sincronismo (Mód. 4 e 17) | Gente na zona, aterramento esquecido, paralelo fora de fase |
 
+## Jogo 2: Para ou Libera ✋✅
+
+**Online:** https://alexandrepiazza55rt.github.io/games_SIGMA/para-ou-libera/ (também linkado no menu do jogo 1).
+
+O aluno recebe cartas com situações de campo e tem segundos para decidir se a situação é **condição impeditiva (PARA)** ou se o **serviço pode ser liberado (LIBERA)**. Dá para arrastar a carta, tocar nos botões ou usar ← e →.
+
+- 40 cartas (24 PARA e 16 LIBERA) sobre clima, equipe, EPI/EPC, PT/APR, comunicação, veículos, trabalho energizado e LOTO, cada uma com o slide de referência.
+- São 3 capacetes. Liberar o que devia parar causa um acidente e custa um capacete. Parar o que estava certo custa 5 s de turno.
+- Acertos seguidos multiplicam os pontos até ×4, e o pavio de cada carta encurta conforme o jogo avança.
+- No fim aparece a revisão de cada erro, com a explicação e o slide.
+
 ## Estrutura
 
 - `js/engine.js`: simulação (grafo do unifilar, energização, regras, mortes e infrações). Não depende do DOM.
@@ -30,5 +41,6 @@ Também dá para abrir `index.html` no navegador (funciona direto do arquivo, se
 - `js/ui.js`: interface, diagrama SVG, minijogos (ordem dos grampos de aterramento e sincronoscópio), efeitos.
 - `js/audio.js`: sons sintetizados com WebAudio, sem nenhum arquivo externo.
 - `tests/engine.test.js`: testes do motor (`node --test tests/*.test.js`).
+- `para-ou-libera/`: jogo 2. `js/cards.js` traz as cartas, `js/core.js` as regras (testadas em `tests/para.test.js`) e `js/para.js` a interface.
 
 Para criar uma fase nova, adicione um objeto em `js/levels.js` e um teste com a solução limpa e as armadilhas.
