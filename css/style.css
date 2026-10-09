@@ -103,6 +103,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .new-game.zm-banner { background: linear-gradient(90deg, rgba(255, 59, 48, .2), rgba(255, 212, 0, .1)); margin-top: 10px; }
 .new-game.vq-banner { background: linear-gradient(90deg, rgba(255, 138, 31, .22), rgba(255, 59, 48, .08)); margin-top: 10px; }
 .ng-t .o { color: var(--orange); }
+.new-game.ps-banner { background: linear-gradient(90deg, rgba(90, 176, 255, .2), rgba(90, 176, 255, .05)); margin-top: 10px; }
+.ng-t .b { color: var(--blue); }
 .ng-tag { font-family: var(--mono); font-size: 11px; color: var(--yellow); letter-spacing: 1.5px; }
 .ng-t { font-family: var(--display); font-size: 24px; letter-spacing: .5px; }
 .ng-t .r { color: var(--red); } .ng-t .g { color: var(--green); }

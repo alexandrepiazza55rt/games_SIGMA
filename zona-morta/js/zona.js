@@ -539,7 +539,7 @@
       ZM.ZONES.map(function (zz) { return '<tr><td>' + zz.label + '</td><td>' + fm(zz.zr) + '</td><td>' + fm(zz.zc) + '</td></tr>'; }).join('') +
       '</table><small>Valores ilustrativos do curso — utilize o anexo vigente da NR-10 para cada tensão.</small></div>';
     html += '<div class="btns"><button class="act primary big" id="e-again">↻ Jogar de novo</button><button class="act ghost" id="e-menu">Menu</button></div>' +
-      '<div class="other-games"><a href="../index.html">⚡ Desenergiza ou Morre</a><a href="../para-ou-libera/index.html">✋ Para ou Libera</a><a href="../veste-ou-queima/index.html">🧥 Veste ou Queima</a></div>';
+      '<div class="other-games"><a href="../index.html">⚡ Desenergiza ou Morre</a><a href="../para-ou-libera/index.html">✋ Para ou Libera</a><a href="../veste-ou-queima/index.html">🧥 Veste ou Queima</a><a href="../pericia/index.html">🔍 Perícia SEP</a></div>';
     $('#end-body').innerHTML = html;
     setTimeout(function () { show('zm-end'); }, dead ? 600 : 200);
   }

@@ -330,7 +330,7 @@
       '<tr><td>3 / 4</td><td>26.500 / 36.000 V</td><td>34,5 kV e maiores</td></tr></table>' +
       '<p style="margin:10px 0 0">🔥 <b>Vestimenta:</b> ATPV maior que a energia incidente do ponto (slide 81). <b>Face:</b> protetor facial compatível com a energia (slide 80).</p></div>';
     html += '<div class="btns"><button class="act primary big" id="e-again">↻ Jogar de novo</button><button class="act ghost" id="e-menu">Menu</button></div>' +
-      '<div class="other-games"><a href="../index.html">⚡ Desenergiza ou Morre</a><a href="../para-ou-libera/index.html">✋ Para ou Libera</a><a href="../zona-morta/index.html">☠️ Zona Morta</a></div>';
+      '<div class="other-games"><a href="../index.html">⚡ Desenergiza ou Morre</a><a href="../para-ou-libera/index.html">✋ Para ou Libera</a><a href="../zona-morta/index.html">☠️ Zona Morta</a><a href="../pericia/index.html">🔍 Perícia SEP</a></div>';
     $('#end-body').innerHTML = html;
     setTimeout(function () { show('vq-end'); }, dead ? 600 : 200);
   }

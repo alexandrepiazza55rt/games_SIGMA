@@ -56,6 +56,16 @@ O aluno lê a **etiqueta de arc flash** do painel (energia incidente, tensão e 
 - **Hierarquia de controle:** quando dá, o jogo oferece medidas coletivas antes do EPI (modo de manutenção, extração remota, desenergizar), e elas dão bônus. Em 62 cal/cm² nenhum EPI resolve, e só desenergizar salva.
 - Armadilhas: poliéster que derrete, bota com biqueira de aço, boné em vez de capacete e lanterna comum na poeira de milho.
 
+## Jogo 5: Perícia SEP 🔍
+
+**Online:** https://alexandrepiazza55rt.github.io/games_SIGMA/pericia/
+
+São quatro cenas congeladas, uma para cada caso real do Módulo 18: contato em MT por falha de bloqueio, arco em manobra de cubículo, tensão induzida e munck na rede. O aluno toca nos erros da cena e classifica cada um como **causa imediata** (o ato ou a condição que disparou o evento) ou **causa básica** (a raiz: procedimento, gestão, treinamento, planejamento), conforme o slide 267.
+
+- Cada caso tem de 5 a 7 erros e alguns itens corretos (extintor, DEA, placas). Apontar um item correto conta como falso positivo e desconta pontos.
+- O aluno tem 2:30 por caso. Tocar no vazio custa 2 s, e a dica custa 100 pontos.
+- Ao final de cada caso sai um laudo com nota de A a E, os erros que passaram, as classificações erradas e a conclusão do caso real.
+
 ## Estrutura
 
 - `js/engine.js`: simulação (grafo do unifilar, energização, regras, mortes e infrações). Não depende do DOM.
@@ -63,6 +73,7 @@ O aluno lê a **etiqueta de arc flash** do painel (energia incidente, tensão e 
 - `js/ui.js`: interface, diagrama SVG, minijogos (ordem dos grampos de aterramento e sincronoscópio), efeitos.
 - `js/audio.js`: sons sintetizados com WebAudio, sem nenhum arquivo externo.
 - `tests/engine.test.js`: testes do motor (`node --test tests/*.test.js`).
+- `pericia/`: jogo 5. `js/cases.js` traz as cenas (arte SVG e pontos clicáveis), `js/core.js` as regras da investigação (testadas em `tests/pericia.test.js`, inclusive a garantia de que nenhum ponto se sobrepõe a outro) e `js/pericia.js` a interface.
 - `veste-ou-queima/`: jogo 4. `js/kit.js` traz o armário, as tarefas e a avaliação do teste do arco (testados em `tests/veste.test.js`, com uma solução perfeita por tarefa) e `js/veste.js` a interface.
 - `zona-morta/`: jogo 3. `js/geo.js` traz a tabela de raios, a pontuação e a geometria do munck (testados em `tests/zona.test.js`, incluindo um teste que prova que cada missão tem solução), `js/missions.js` as missões e `js/zona.js` a interface.
 - `para-ou-libera/`: jogo 2. `js/cards.js` traz as cartas, `js/core.js` as regras (testadas em `tests/para.test.js`) e `js/para.js` a interface.

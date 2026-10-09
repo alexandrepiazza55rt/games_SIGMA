@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Perícia SEP</title>
+  <meta name="description" content="NR-10 SEP: investigue a cena do acidente, ache os erros e separe causa imediata de causa básica.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="css/pericia.css">
+</head>
+<body class="ps">
+  <!-- MENU -->
+  <section id="ps-menu" class="screen active">
+    <div class="menu-wrap">
+      <div class="hazard"></div>
+      <p class="kicker">NR-10 · SEP · Investigação de acidentes</p>
+      <h1 class="logo ps-logo"><span>PERÍCIA</span><span class="w-sep">SEP 🔍</span></h1>
+      <p class="tag">Quatro acidentes reais do curso. A cena está congelada. Ache tudo o que deu errado — e diga se é <b>causa imediata</b> ou <b>causa básica</b>.</p>
+      <div class="ps-how">
+        <div class="k imediata"><b>⚡ Causa imediata</b><small>o ato ou a condição que disparou o evento, na hora.</small></div>
+        <div class="k basica"><b>🌱 Causa básica</b><small>a raiz por trás: procedimento, gestão, treinamento, planejamento.</small></div>
+      </div>
+      <ul class="rules">
+        <li>🔍 Toque nos pontos da cena que estão errados. Cada caso tem de 5 a 7.</li>
+        <li>✅ Cuidado: algumas coisas estão <b>certas</b>. Apontar o que está certo desconta pontos.</li>
+        <li>⏱ 2:30 por caso. Toque no vazio custa 2 s. Travou? A dica custa 100 pontos.</li>
+        <li>📋 No fim de cada caso sai o laudo, com a conclusão do caso real.</li>
+      </ul>
+      <label class="name-box" for="player-name"><span>👷 Nome do aluno</span>
+        <input id="player-name" type="text" maxlength="40" placeholder="Digite seu nome completo" autocomplete="name"></label>
+      <div id="name-err" class="name-err hidden">Digite seu nome para começar.</div>
+      <button id="ps-start" class="act primary big">🔍 ABRIR O PRIMEIRO CASO</button>
+      <div id="ps-best" class="rank"></div>
+      <div class="other-games">
+        <a href="../index.html">⚡ Desenergiza ou Morre</a>
+        <a href="../para-ou-libera/index.html">✋ Para ou Libera</a>
+        <a href="../zona-morta/index.html">☠️ Zona Morta</a>
+        <a href="../veste-ou-queima/index.html">🧥 Veste ou Queima</a>
+      </div>
+      <p class="foot">Baseado no curso complementar NR-10 SEP (Portaria MTE nº 737/2026) · Módulo 18 e os módulos citados em cada achado.</p>
+    </div>
+  </section>
+
+  <!-- JOGO -->
+  <section id="ps-game" class="screen">
+    <header class="hud">
+      <button id="ps-quit" class="hud-btn" aria-label="Sair">✕</button>
+      <div class="hud-stat" title="Caso">📁 <b id="h-case">1/4</b></div>
+      <div class="hud-stat" title="Tempo">⏱ <b id="h-time">2:30</b></div>
+      <div class="hud-stat score" title="Pontos">★ <b id="h-score">0</b></div>
+      <button id="ps-hint" class="hud-btn hint" aria-label="Dica">💡</button>
+      <button id="ps-sound" class="hud-btn" aria-label="Som">🔊</button>
+    </header>
+    <div class="ps-body">
+      <div class="brief">
+        <div class="b-place" id="b-place"></div>
+        <h2 id="b-title"></h2>
+        <p id="b-intro"></p>
+        <div class="progress"><span id="b-found"></span><span class="legend"><i class="dot imediata"></i>imediata <i class="dot basica"></i>básica <i class="dot ok"></i>correto</span></div>
+      </div>
+      <div class="scene-wrap">
+        <svg id="scene" viewBox="0 0 900 560" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Cena do acidente"></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIM -->
+  <section id="ps-end" class="screen">
+    <div class="menu-wrap" id="end-body"></div>
+  </section>
+
+  <div id="modal" class="modal hidden"></div>
+  <div id="toasts" class="toasts"></div>
+
+  <script src="../js/audio.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/cases.js"></script>
+  <script src="js/pericia.js"></script>
+</body>
+</html>
