@@ -100,6 +100,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .new-game { display: grid; gap: 2px; margin-top: 16px; padding: 14px 16px; border-radius: 14px; text-decoration: none; color: var(--text);
   background: linear-gradient(90deg, rgba(255, 59, 48, .14), rgba(46, 204, 113, .14)); border: 1px solid #3a4a5e; transition: transform .1s, border-color .15s; }
 .new-game:hover { transform: translateX(3px); border-color: var(--yellow); }
+.new-game.zm-banner { background: linear-gradient(90deg, rgba(255, 59, 48, .2), rgba(255, 212, 0, .1)); margin-top: 10px; }
 .ng-tag { font-family: var(--mono); font-size: 11px; color: var(--yellow); letter-spacing: 1.5px; }
 .ng-t { font-family: var(--display); font-size: 24px; letter-spacing: .5px; }
 .ng-t .r { color: var(--red); } .ng-t .g { color: var(--green); }

@@ -13,7 +13,7 @@
 .how-i.libera { border-color: rgba(46, 204, 113, .55); } .how-i.libera b { color: var(--green); }
 .rules { list-style: none; padding: 0; margin: 0 0 22px; display: grid; gap: 8px; color: #c4cfdb; font-size: 14.5px; line-height: 1.45; }
 #pl-start { width: 100%; max-width: 420px; }
-.other-game { display: inline-block; margin-top: 18px; color: var(--yellow); text-decoration: none; font-size: 14px; }
+.other-game { display: block; margin-top: 14px; color: var(--yellow); text-decoration: none; font-size: 14px; }
 .other-game:hover { text-decoration: underline; }
 
 /* HUD */

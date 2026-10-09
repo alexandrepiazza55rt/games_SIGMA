@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Zona Morta</title>
+  <meta name="description" content="NR-10 SEP: zona de risco, zona controlada e munck perto da rede. As zonas são invisíveis — até você errar.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="css/zona.css">
+</head>
+<body class="zm">
+  <!-- MENU -->
+  <section id="zm-menu" class="screen active">
+    <div class="menu-wrap">
+      <div class="hazard"></div>
+      <p class="kicker">NR-10 · SEP · Distâncias de segurança</p>
+      <h1 class="logo zm-logo"><span>ZONA</span><span class="w-morta glitch" data-t="MORTA">MORTA</span></h1>
+      <p class="tag">As zonas de risco são <b>invisíveis</b>. Você só vê onde elas estavam depois que entrou nelas.</p>
+      <div class="zm-how">
+        <div><span class="dot zr"></span><b>Zona de risco</b><small>só com técnica e autorização. Entrou sem? Acidente.</small></div>
+        <div><span class="dot zc"></span><b>Zona controlada</b><small>só trabalhador autorizado.</small></div>
+        <div><span class="dot zl"></span><b>Zona livre</b><small>sem restrição específica.</small></div>
+      </div>
+      <ul class="rules">
+        <li>📏 Arraste a mão ou a ferramenta até o limite que a sua função permite. Quanto mais preciso, mais pontos.</li>
+        <li>🏗️ Opere o munck e passe a carga perto da rede: a lança <b>inteira</b> conta.</li>
+        <li>🚨 Encostou na rede? Você tem segundos para decidir o que fazer.</li>
+        <li>🪖 3 capacetes. Perdeu todos? GAME OVER.</li>
+      </ul>
+      <label class="name-box" for="player-name"><span>👷 Nome do aluno</span>
+        <input id="player-name" type="text" maxlength="40" placeholder="Digite seu nome completo" autocomplete="name"></label>
+      <div id="name-err" class="name-err hidden">Digite seu nome para começar.</div>
+      <button id="zm-start" class="act primary big">⚡ ENTRAR NA ZONA</button>
+      <div id="zm-best" class="rank"></div>
+      <div class="other-games">
+        <a href="../index.html">⚡ Desenergiza ou Morre</a>
+        <a href="../para-ou-libera/index.html">✋ Para ou Libera</a>
+      </div>
+      <p class="foot">Baseado no curso complementar NR-10 SEP (Portaria MTE nº 737/2026) · Módulos 6, 8, 9 e 18. Raios de referência do slide 96 (valores ilustrativos — use o anexo vigente).</p>
+    </div>
+  </section>
+
+  <!-- JOGO -->
+  <section id="zm-game" class="screen">
+    <header class="hud">
+      <button id="zm-quit" class="hud-btn" aria-label="Sair">✕</button>
+      <div class="hud-stat" title="Missão">🎯 <b id="h-mission">1/9</b></div>
+      <div class="hud-lives" id="h-lives" title="Capacetes">🪖🪖🪖</div>
+      <div class="hud-stat score" title="Pontos">★ <b id="h-score">0</b></div>
+      <button id="zm-sound" class="hud-btn" aria-label="Som">🔊</button>
+    </header>
+    <div class="zm-body">
+      <div class="brief">
+        <div class="b-place" id="b-place"></div>
+        <h2 id="b-title"></h2>
+        <p id="b-who" class="b-who"></p>
+        <p id="b-task" class="b-task"></p>
+        <p id="b-hint" class="b-hint"></p>
+      </div>
+      <div class="scene-wrap">
+        <svg id="scene" viewBox="0 0 900 520" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Cena da missão"></svg>
+        <div id="kv-tag" class="kv-tag"></div>
+      </div>
+      <div class="zm-actions">
+        <button id="act-main" class="act primary big"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIM -->
+  <section id="zm-end" class="screen">
+    <div class="menu-wrap" id="end-body"></div>
+  </section>
+
+  <div id="modal" class="modal hidden"></div>
+  <div id="flash" class="zm-flash"></div>
+  <div id="toasts" class="toasts"></div>
+
+  <script src="../js/audio.js"></script>
+  <script src="js/geo.js"></script>
+  <script src="js/missions.js"></script>
+  <script src="js/zona.js"></script>
+</body>
+</html>

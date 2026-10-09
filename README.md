@@ -34,6 +34,17 @@ O aluno recebe cartas com situações de campo e tem segundos para decidir se a 
 - Acertos seguidos multiplicam os pontos até ×4, e o pavio de cada carta encurta conforme o jogo avança.
 - No fim aparece a revisão de cada erro, com a explicação e o slide.
 
+## Jogo 3: Zona Morta ☠️
+
+**Online:** https://alexandrepiazza55rt.github.io/games_SIGMA/zona-morta/
+
+As zonas de risco e controlada são **invisíveis**. O aluno só vê onde elas estavam depois de confirmar a posição. São 9 missões:
+
+- **Aproximação** (13,8 kV, 380 V, 34,5 kV e 500 kV): o aluno arrasta a mão ou a ferramenta até o limite que a função dele permite. O autorizado pode entrar na zona controlada, nunca na de risco; o não autorizado fica na zona livre, e a ferramenta conta como corpo. Ao confirmar, as zonas aparecem na tela com a medida real.
+- **Munck** (13,8 kV e 230 kV): começa com um checklist de preparação (observador, patolas, área isolada, APR e uma armadilha). Depois o aluno opera a lança em tempo real, e a lança, o cabo e a carga contam na distância. Passar por cima da rede de 13,8 kV obriga a lança a varrer a linha.
+- **Emergência:** a lança encostou na rede, com e sem fogo, e o aluno tem 20 s para decidir (Caso 4 do curso).
+- São 3 capacetes. No fim aparece a revisão de cada missão e a tabela de raios do slide 96.
+
 ## Estrutura
 
 - `js/engine.js`: simulação (grafo do unifilar, energização, regras, mortes e infrações). Não depende do DOM.
@@ -41,6 +52,7 @@ O aluno recebe cartas com situações de campo e tem segundos para decidir se a 
 - `js/ui.js`: interface, diagrama SVG, minijogos (ordem dos grampos de aterramento e sincronoscópio), efeitos.
 - `js/audio.js`: sons sintetizados com WebAudio, sem nenhum arquivo externo.
 - `tests/engine.test.js`: testes do motor (`node --test tests/*.test.js`).
+- `zona-morta/`: jogo 3. `js/geo.js` traz a tabela de raios, a pontuação e a geometria do munck (testados em `tests/zona.test.js`, incluindo um teste que prova que cada missão tem solução), `js/missions.js` as missões e `js/zona.js` a interface.
 - `para-ou-libera/`: jogo 2. `js/cards.js` traz as cartas, `js/core.js` as regras (testadas em `tests/para.test.js`) e `js/para.js` a interface.
 
 Para criar uma fase nova, adicione um objeto em `js/levels.js` e um teste com a solução limpa e as armadilhas.
