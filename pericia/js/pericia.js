@@ -262,8 +262,7 @@
       '🌱 <b>Causa básica:</b> a raiz por trás da imediata — procedimento, PT, APR, treinamento, planejamento, gestão.<br>' +
       'Tratar só o imediato não evita a repetição. A investigação busca as causas básicas — o foco é a causa, não a culpa.</div>';
     html += '<div class="btns"><button class="act primary big" id="e-again">↻ Jogar de novo</button><button class="act ghost" id="e-menu">Menu</button></div>' +
-      '<div class="other-games"><a href="../index.html">⚡ Desenergiza ou Morre</a><a href="../para-ou-libera/index.html">✋ Para ou Libera</a>' +
-      '<a href="../zona-morta/index.html">☠️ Zona Morta</a><a href="../veste-ou-queima/index.html">🧥 Veste ou Queima</a></div>';
+      '<div class="other-games"><a href="../index.html">🏠 Todos os jogos</a><a href="../desenergiza-ou-morre/index.html">⚡ Desenergiza ou Morre</a><a href="../para-ou-libera/index.html">✋ Para ou Libera</a><a href="../zona-morta/index.html">☠️ Zona Morta</a><a href="../veste-ou-queima/index.html">🧥 Veste ou Queima</a></div>';
     $('#end-body').innerHTML = html;
     show('ps-end');
   }

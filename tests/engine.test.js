@@ -2,8 +2,8 @@
 // Rodar com: node --test tests/
 const test = require('node:test');
 const assert = require('node:assert');
-const { Game } = require('../js/engine.js');
-const levels = require('../js/levels.js');
+const { Game } = require('../desenergiza-ou-morre/js/engine.js');
+const levels = require('../desenergiza-ou-morre/js/levels.js');
 
 const L = Object.fromEntries(levels.map((l) => [l.id, l]));
 const T = ['T', 'A', 'B', 'C'];

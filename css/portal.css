@@ -1,0 +1,40 @@
+/* Página inicial (portal) dos Games SIGMA. */
+
+.portal { max-width: 860px; margin: 0 auto; padding: 32px 16px 48px; }
+.portal .logo .w-sigma { color: var(--yellow); text-shadow: 0 0 26px rgba(255, 212, 0, .4); }
+.name-hint { color: var(--dim); font-size: 13px; margin: -4px 0 22px; }
+
+.games { display: grid; gap: 12px; }
+.game {
+  display: grid; grid-template-columns: 36px 56px 1fr auto; align-items: center; gap: 14px;
+  background: var(--panel); border: 1px solid var(--line); border-left: 5px solid var(--c, var(--yellow));
+  border-radius: 16px; padding: 16px; color: var(--text); text-decoration: none;
+  transition: transform .12s, border-color .15s, background .15s;
+}
+.game:hover { transform: translateX(4px); background: #18212d; border-color: var(--c); }
+.game.red { --c: var(--red); } .game.green { --c: var(--green); } .game.yellow { --c: var(--yellow); }
+.game.orange { --c: var(--orange); } .game.blue { --c: var(--blue); }
+.g-n { font-family: var(--display); font-size: 30px; color: #3a4a5e; text-align: center; }
+.g-icon { font-size: 40px; text-align: center; }
+.g-body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.g-body strong { font-family: var(--display); font-size: 25px; font-weight: 500; letter-spacing: .5px; color: var(--c); }
+.g-line { color: #c4cfdb; font-size: 14.5px; line-height: 1.45; }
+.g-meta { font-family: var(--mono); font-size: 11.5px; color: var(--dim); }
+.g-best { font-size: 12.5px; color: var(--yellow); }
+.g-go { font-family: var(--display); letter-spacing: 1px; font-size: 15px; color: #111; background: var(--c); border-radius: 10px; padding: 9px 12px; white-space: nowrap; }
+
+.tools { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.tools .act { text-decoration: none; color: var(--text); }
+
+.qr-card { text-align: center; max-width: 380px; }
+.qr-card img { width: min(300px, 100%); background: #fff; border-radius: 14px; padding: 10px; margin: 6px auto; display: block; }
+.qr-url { font-family: var(--mono); color: var(--yellow); font-size: 13px; word-break: break-all; }
+.qr-card .btns { justify-content: center; margin-top: 14px; }
+
+@media (max-width: 640px) {
+  .game { grid-template-columns: 44px 1fr; gap: 10px 12px; padding: 14px; }
+  .g-n { display: none; }
+  .g-icon { font-size: 34px; grid-row: span 2; align-self: start; }
+  .g-go { grid-column: 2; justify-self: start; }
+  .g-body strong { font-size: 22px; }
+}

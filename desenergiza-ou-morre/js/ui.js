@@ -708,16 +708,6 @@
     var i = SEP.levels.findIndex(function (L) { return !p[L.id]; });
     openBrief(i < 0 ? 0 : i);
   });
-  $('#btn-qr').addEventListener('click', function () {
-    var m = $('#modal');
-    m.innerHTML = '<div class="card mini qr-card"><div class="sh-kind">JOGUE NO CELULAR</div><h3>Aponte a câmera para o QR</h3>' +
-      '<img src="img/qrcode.svg" alt="QR code para o jogo">' +
-      '<div class="qr-url">alexandrepiazza55rt.github.io/games_SIGMA</div>' +
-      '<a class="act" href="qr.html" target="_blank" rel="noopener">🖨 Abrir versão para imprimir / projetar</a>' +
-      '<button class="act ghost" data-mact="cancel">Fechar</button></div>';
-    m.classList.remove('hidden');
-    m.onclick = function (ev) { if (ev.target.closest('[data-mact="cancel"]') || ev.target === m) closeModal(); };
-  });
   $('#btn-sound').addEventListener('click', function () {
     var m = !A.isMuted();
     A.setMuted(m);

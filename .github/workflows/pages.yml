@@ -25,12 +25,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Testes do motor
+      - name: Testes dos jogos
         run: node --test tests/*.test.js
       - name: Montar site
         run: |
           mkdir -p _site
-          cp -r index.html qr.html css js img para-ou-libera zona-morta veste-ou-queima pericia _site/
+          cp -r index.html qr.html css js img desenergiza-ou-morre para-ou-libera zona-morta veste-ou-queima pericia _site/
       - uses: actions/configure-pages@v5
         with:
           enablement: true
