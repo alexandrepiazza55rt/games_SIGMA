@@ -4,7 +4,9 @@ Jogo web de treinamento para o **curso complementar NR-10 SEP**. O aluno é o ex
 
 ## Como jogar
 
-Abra `index.html` no navegador (funciona direto do arquivo, sem servidor) ou publique a pasta em qualquer hospedagem estática, como o GitHub Pages. Roda no PC e no celular.
+**Online:** https://alexandrepiazza55rt.github.io/games_SIGMA/ · QR para a turma: [`qr.html`](https://alexandrepiazza55rt.github.io/games_SIGMA/qr.html) (também no botão "📱 QR para a turma" do menu). A publicação é feita automaticamente pelo workflow `.github/workflows/pages.yml` a cada push.
+
+Também dá para abrir `index.html` no navegador (funciona direto do arquivo, sem servidor) ou publicar a pasta em qualquer outra hospedagem estática. Roda no PC e no celular.
 
 - O diagrama **não mostra** onde há tensão. O aluno precisa **medir**, e com detector testado.
 - Ao **liberar a equipe**, o jogo dispara os eventos da fase (COS religando à distância, colega encostando na barra vizinha...).

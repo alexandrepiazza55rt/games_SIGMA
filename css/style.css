@@ -64,7 +64,13 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .logo .ou { font-size: .32em; color: var(--dim); font-family: var(--font); font-weight: 400; text-transform: none; margin: 4px 0 2px 4px; }
 .logo .morre { color: var(--red); text-shadow: 0 0 24px rgba(255, 59, 48, .45); }
 .tag { color: #c4cfdb; font-size: 17px; line-height: 1.5; margin: 0 0 22px; }
-#btn-play { width: 100%; max-width: 360px; }
+#btn-play { flex: 1 1 260px; max-width: 360px; }
+.menu-btns { display: flex; flex-wrap: wrap; gap: 10px; }
+#btn-qr { flex: 0 1 auto; }
+.qr-card { text-align: center; }
+.qr-card img { width: min(300px, 100%); align-self: center; background: #fff; border-radius: 14px; padding: 10px; }
+.qr-url { font-family: var(--mono); color: var(--yellow); font-size: 13px; word-break: break-all; }
+.qr-card a.act { text-decoration: none; text-align: center; color: var(--text); }
 
 .glitch { position: relative; }
 .glitch::before, .glitch::after {
