@@ -68,8 +68,9 @@
     lastT = t;
     if (!paused && !busy) {
       round.tick(dt);
-      var left = round.fuse() - (t - cardStart) / 1000;
-      $('#fuse').style.transform = 'scaleX(' + Math.max(0, left / round.fuse()) + ')';
+      var total = round.fuse();
+      var left = total - (t - cardStart) / 1000;
+      $('#fuse').style.transform = 'scaleX(' + Math.max(0, left / total) + ')';
       if (left <= 0) hesitate();
     }
     updateHud();

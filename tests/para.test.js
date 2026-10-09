@@ -2,7 +2,7 @@
 const test = require('node:test');
 const assert = require('node:assert');
 const cards = require('../para-ou-libera/js/cards.js');
-const { Round, CFG, rank } = require('../para-ou-libera/js/core.js');
+const { Round, CFG, rank, words } = require('../para-ou-libera/js/core.js');
 
 test('toda carta tem resposta, explicação e slide de referência', () => {
   const ids = new Set();
@@ -66,11 +66,14 @@ test('hesitar zera o combo e custa tempo', () => {
   assert.strictEqual(r.time, t - CFG.hesitatePenalty);
 });
 
-test('pavio encurta até o mínimo', () => {
+test('pavio dá tempo de ler a carta e a folga para decidir encurta até o mínimo', () => {
   const r = new Round(cards);
-  assert.strictEqual(r.fuse(), CFG.fuseStart);
+  const c = r.current();
+  const read = words(c) / CFG.readRate;
+  assert.strictEqual(r.fuse(), read + CFG.fuseStart);
   r.answered = 1000;
-  assert.strictEqual(r.fuse(), CFG.fuseMin);
+  assert.strictEqual(r.fuse(c), read + CFG.fuseMin);
+  for (const k of cards) assert.ok(r.fuse(k) >= 11, `carta ${k.id}: ${r.fuse(k).toFixed(1)} s`);
 });
 
 test('baralho reembaralha sem acabar e revisão lista cada erro uma vez', () => {

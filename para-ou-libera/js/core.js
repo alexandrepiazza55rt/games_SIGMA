@@ -1,7 +1,7 @@
 /*
  * Regras do "Para ou Libera". Sem DOM — testável no Node.
  *
- * Acertou: +100 × multiplicador (sobe a cada 3 acertos seguidos, até ×4) + bônus de reflexo.
+ * Acertou: +100 × multiplicador (sobe a cada 3 acertos seguidos, até ×4) + bônus se responder antes de meio pavio.
  * Liberou o que era PARA: acidente, perde um capacete (3 vidas).
  * Parou o que era LIBERA: parada desnecessária, perde tempo — mas ninguém morre.
  * Hesitou até o pavio acabar: perde o combo e um pouco de tempo.
@@ -10,17 +10,22 @@
   'use strict';
 
   var CFG = {
-    time: 75,          // segundos de turno
+    time: 150,         // segundos de turno
     lives: 3,
     base: 100,
-    quick: 2500,       // ms para ganhar bônus de reflexo
+    quick: 0.5,        // fração do pavio: responder antes da metade dá bônus
     quickBonus: 50,
     stopPenalty: 5,    // s perdidos por parada desnecessária
     hesitatePenalty: 3,
-    fuseStart: 9,      // s para decidir a primeira carta
-    fuseMin: 4.5,
-    fuseStep: 0.3
+    readRate: 2.5,     // palavras por segundo (leitura com calma no celular)
+    fuseStart: 7,      // s para decidir, além do tempo de leitura
+    fuseMin: 4,        // folga mínima para decidir quando o jogo acelera
+    fuseStep: 0.15     // quanto a folga encurta a cada carta respondida
   };
+
+  function words(card) {
+    return (card.title + ' ' + card.text + ' ' + card.q).split(/\s+/).filter(Boolean).length;
+  }
 
   function shuffle(a, rnd) {
     a = a.slice();
@@ -49,7 +54,12 @@
 
   Round.prototype.multiplier = function () { return 1 + Math.min(3, Math.floor(this.combo / 3)); };
 
-  Round.prototype.fuse = function () { return Math.max(CFG.fuseMin, CFG.fuseStart - this.answered * CFG.fuseStep); };
+  // Tempo do pavio: o necessário para ler a carta + uma folga para decidir que encurta com o jogo.
+  Round.prototype.fuse = function (card) {
+    card = card || this.current();
+    var read = words(card) / CFG.readRate;
+    return read + Math.max(CFG.fuseMin, CFG.fuseStart - this.answered * CFG.fuseStep);
+  };
 
   Round.prototype.next = function () {
     this.i++;
@@ -64,6 +74,7 @@
   // choice: 'para' | 'libera'; ms: tempo de reação
   Round.prototype.answer = function (choice, ms) {
     var card = this.current();
+    var fuse = this.fuse(card);
     var ok = choice === card.ans;
     var r = { card: card, choice: choice, correct: ok, points: 0, lifeLost: false, timeLost: 0 };
     this.answered++;
@@ -72,7 +83,7 @@
       this.correct++;
       this.bestCombo = Math.max(this.bestCombo, this.combo);
       r.mult = this.multiplier();
-      r.quick = ms < CFG.quick;
+      r.quick = ms < fuse * 1000 * CFG.quick;
       r.points = CFG.base * r.mult + (r.quick ? CFG.quickBonus : 0);
       this.score += r.points;
     } else {
@@ -122,7 +133,7 @@
     return r;
   }
 
-  var api = { Round: Round, CFG: CFG, rank: rank, shuffle: shuffle };
+  var api = { Round: Round, CFG: CFG, rank: rank, shuffle: shuffle, words: words };
   root.PL = root.PL || {};
   for (var k in api) root.PL[k] = api[k];
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
