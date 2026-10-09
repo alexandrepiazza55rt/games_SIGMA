@@ -2,18 +2,18 @@
 
 Cinco jogos web de treinamento para o **curso complementar NR-10 SEP** (Portaria MTE nº 737/2026). Cada erro do aluno vira lição, sempre com a referência do slide do curso.
 
-**Portal:** https://alexandrepiazza55rt.github.io/games_SIGMA/
-**QR para a turma:** [https://alexandrepiazza55rt.github.io/games_SIGMA/qr.html](https://alexandrepiazza55rt.github.io/games_SIGMA/qr.html), também no botão "📱 QR code para a turma" do portal.
+**Portal:** https://games-sigma.pages.dev/ (Cloudflare Pages). Cópia no GitHub Pages: https://alexandrepiazza55rt.github.io/games_SIGMA/
+**QR para a turma** (aponta para a Cloudflare): [https://games-sigma.pages.dev/qr](https://games-sigma.pages.dev/qr), também no botão "📱 QR code para a turma" do portal.
 
 Os jogos rodam no celular e no computador, sem instalar nada. O nome do aluno é digitado uma vez, vale para todos os jogos e aparece no resultado final, com data e hora, para o instrutor validar.
 
 | # | Jogo | Pasta | Assunto |
 |---|------|-------|---------|
-| 1 | ⚡ Desenergiza ou Morre | [`desenergiza-ou-morre/`](https://alexandrepiazza55rt.github.io/games_SIGMA/desenergiza-ou-morre/) | Desenergização em 6 etapas, manobras, reenergização (Mód. 2, 4, 8, 17, 18) |
-| 2 | ✋ Para ou Libera | [`para-ou-libera/`](https://alexandrepiazza55rt.github.io/games_SIGMA/para-ou-libera/) | Condições impeditivas, PT/APR, EPI, comunicação (Mód. 3 a 9) |
-| 3 | ☠️ Zona Morta | [`zona-morta/`](https://alexandrepiazza55rt.github.io/games_SIGMA/zona-morta/) | Zonas de risco e controlada, munck perto da rede (Mód. 6, 8, 9, 18) |
-| 4 | 🧥 Veste ou Queima | [`veste-ou-queima/`](https://alexandrepiazza55rt.github.io/games_SIGMA/veste-ou-queima/) | EPI, ATPV, classes de luva, hierarquia de controle (Mód. 3, 5, 16, 19) |
-| 5 | 🔍 Perícia SEP | [`pericia/`](https://alexandrepiazza55rt.github.io/games_SIGMA/pericia/) | Investigação de acidentes: causa imediata e causa básica (Mód. 18) |
+| 1 | ⚡ Desenergiza ou Morre | [`desenergiza-ou-morre/`](https://games-sigma.pages.dev/desenergiza-ou-morre/) | Desenergização em 6 etapas, manobras, reenergização (Mód. 2, 4, 8, 17, 18) |
+| 2 | ✋ Para ou Libera | [`para-ou-libera/`](https://games-sigma.pages.dev/para-ou-libera/) | Condições impeditivas, PT/APR, EPI, comunicação (Mód. 3 a 9) |
+| 3 | ☠️ Zona Morta | [`zona-morta/`](https://games-sigma.pages.dev/zona-morta/) | Zonas de risco e controlada, munck perto da rede (Mód. 6, 8, 9, 18) |
+| 4 | 🧥 Veste ou Queima | [`veste-ou-queima/`](https://games-sigma.pages.dev/veste-ou-queima/) | EPI, ATPV, classes de luva, hierarquia de controle (Mód. 3, 5, 16, 19) |
+| 5 | 🔍 Perícia SEP | [`pericia/`](https://games-sigma.pages.dev/pericia/) | Investigação de acidentes: causa imediata e causa básica (Mód. 18) |
 
 ## 1. Desenergiza ou Morre ⚡
 
@@ -87,6 +87,6 @@ Cada jogo é uma página independente: o que é regra fica num arquivo sem DOM (
 
 **Build:** `bash scripts/build.sh` roda os testes e monta o site em `_site/`. Se algum teste falhar, nada é publicado. O mesmo script é usado:
 - pelo workflow `.github/workflows/pages.yml`, que publica no GitHub Pages a cada push;
-- pelo Cloudflare Pages (comando de build `bash scripts/build.sh`, diretório de saída `_site`).
+- pelo Cloudflare Pages, projeto `games-sigma`. Ele foi criado por upload direto, então **não atualiza sozinho**: a cada mudança é preciso rodar `bash scripts/build.sh` e publicar com `npx wrangler pages deploy _site --project-name games-sigma --branch main`, usando um token com permissão "Cloudflare Pages: Editar".
 
 Para abrir localmente, basta abrir `index.html` no navegador. Funciona direto do arquivo, sem servidor.
