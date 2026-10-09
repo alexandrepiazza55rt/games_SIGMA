@@ -83,6 +83,10 @@ tests/                       testes das regras de cada jogo
 
 Cada jogo é uma página independente: o que é regra fica num arquivo sem DOM (testável no Node), e a interface fica separada.
 
-**Testes:** `node --test tests/*.test.js`. Eles também rodam no workflow `.github/workflows/pages.yml`, que publica o site no GitHub Pages a cada push.
+**Testes:** `node --test tests/*.test.js`.
+
+**Build:** `bash scripts/build.sh` roda os testes e monta o site em `_site/`. Se algum teste falhar, nada é publicado. O mesmo script é usado:
+- pelo workflow `.github/workflows/pages.yml`, que publica no GitHub Pages a cada push;
+- pelo Cloudflare Pages (comando de build `bash scripts/build.sh`, diretório de saída `_site`).
 
 Para abrir localmente, basta abrir `index.html` no navegador. Funciona direto do arquivo, sem servidor.
