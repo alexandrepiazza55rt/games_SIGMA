@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Veste ou Queima</title>
+  <meta name="description" content="NR-10 SEP: leia a etiqueta de arc flash, monte o EPI e encare o teste do arco.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="css/veste.css">
+</head>
+<body class="vq">
+  <!-- MENU -->
+  <section id="vq-menu" class="screen active">
+    <div class="menu-wrap">
+      <div class="hazard"></div>
+      <p class="kicker">NR-10 · SEP · EPI e arco elétrico</p>
+      <h1 class="logo vq-logo"><span>VESTE</span><span class="ou">ou</span><span class="w-fire glitch" data-t="QUEIMA">QUEIMA</span></h1>
+      <p class="tag">Leia a <b>etiqueta de arc flash</b>, abra o armário e vista o eletricista. Depois, o arco explode em cima dele.</p>
+      <ul class="rules">
+        <li>🔥 A vestimenta precisa de <b>ATPV maior</b> que a energia incidente do painel.</li>
+        <li>🧤 A luva precisa de <b>classe compatível</b> com a tensão.</li>
+        <li>⚙️ Antes do EPI, dá para <b>reduzir o risco</b>? EPI é a última barreira — e dá bônus.</li>
+        <li>🩻 Depois do teste do arco, o mapa do corpo mostra onde queimou.</li>
+        <li>🪖 3 capacetes. Lesão fatal custa um.</li>
+      </ul>
+      <label class="name-box" for="player-name"><span>👷 Nome do aluno</span>
+        <input id="player-name" type="text" maxlength="40" placeholder="Digite seu nome completo" autocomplete="name"></label>
+      <div id="name-err" class="name-err hidden">Digite seu nome para começar.</div>
+      <button id="vq-start" class="act primary big">🧥 ABRIR O ARMÁRIO</button>
+      <div id="vq-best" class="rank"></div>
+      <div class="other-games">
+        <a href="../index.html">⚡ Desenergiza ou Morre</a>
+        <a href="../para-ou-libera/index.html">✋ Para ou Libera</a>
+        <a href="../zona-morta/index.html">☠️ Zona Morta</a>
+      </div>
+      <p class="foot">Baseado no curso complementar NR-10 SEP (Portaria MTE nº 737/2026) · Módulos 3, 5, 16 e 19.</p>
+    </div>
+  </section>
+
+  <!-- JOGO -->
+  <section id="vq-game" class="screen">
+    <header class="hud">
+      <button id="vq-quit" class="hud-btn" aria-label="Sair">✕</button>
+      <div class="hud-stat" title="Tarefa">🎯 <b id="h-task">1/8</b></div>
+      <div class="hud-stat" title="Tempo para vestir">⏱ <b id="h-time">1:15</b></div>
+      <div class="hud-lives" id="h-lives" title="Capacetes">🪖🪖🪖</div>
+      <div class="hud-stat score" title="Pontos">★ <b id="h-score">0</b></div>
+      <button id="vq-sound" class="hud-btn" aria-label="Som">🔊</button>
+    </header>
+    <div class="vq-body">
+      <div class="task">
+        <div class="t-place" id="t-place"></div>
+        <h2 id="t-title"></h2>
+        <p id="t-text"></p>
+        <div id="label" class="arc-label"></div>
+        <div id="epc" class="epc"></div>
+      </div>
+      <div class="dress">
+        <div class="avatar-box" id="avatar-box">
+          <svg id="avatar" viewBox="0 0 200 380" role="img" aria-label="Eletricista"></svg>
+          <div class="blast"></div>
+        </div>
+        <div class="locker">
+          <div id="tabs" class="tabs"></div>
+          <div id="items" class="items"></div>
+        </div>
+      </div>
+      <button id="vq-test" class="act primary big">🔥 TESTAR NO ARCO</button>
+    </div>
+  </section>
+
+  <!-- FIM -->
+  <section id="vq-end" class="screen">
+    <div class="menu-wrap" id="end-body"></div>
+  </section>
+
+  <div id="modal" class="modal hidden"></div>
+  <div id="flash" class="vq-flash"></div>
+
+  <script src="../js/audio.js"></script>
+  <script src="js/kit.js"></script>
+  <script src="js/veste.js"></script>
+</body>
+</html>

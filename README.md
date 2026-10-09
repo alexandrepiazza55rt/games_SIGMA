@@ -45,6 +45,17 @@ As zonas de risco e controlada são **invisíveis**. O aluno só vê onde elas e
 - **Emergência:** a lança encostou na rede, com e sem fogo, e o aluno tem 20 s para decidir (Caso 4 do curso).
 - São 3 capacetes. No fim aparece a revisão de cada missão e a tabela de raios do slide 96.
 
+## Jogo 4: Veste ou Queima 🧥🔥
+
+**Online:** https://alexandrepiazza55rt.github.io/games_SIGMA/veste-ou-queima/
+
+O aluno lê a **etiqueta de arc flash** do painel (energia incidente, tensão e fronteira de arco) e veste o eletricista no **armário de EPI**: vestimenta, cabeça e face, luvas, calçado, roupa íntima e extras. Depois vem o **teste do arco**, com explosão e mapa de queimaduras no corpo.
+
+- São 8 tarefas: CCM 480 V, extração de disjuntor de 13,8 kV, pátio com tráfego, casa de força com ruído, linha viva de 34,5 kV em altura, painel de 40 cal/cm², painel de 62 cal/cm² e moagem de milho em área classificada.
+- Regras: o ATPV precisa ser maior que a energia (slide 81), a classe da luva compatível com a tensão (slide 82), o protetor facial adequado à energia (slide 80), o calçado sem metal (slide 83) e a roupa íntima não sintética.
+- **Hierarquia de controle:** quando dá, o jogo oferece medidas coletivas antes do EPI (modo de manutenção, extração remota, desenergizar), e elas dão bônus. Em 62 cal/cm² nenhum EPI resolve, e só desenergizar salva.
+- Armadilhas: poliéster que derrete, bota com biqueira de aço, boné em vez de capacete e lanterna comum na poeira de milho.
+
 ## Estrutura
 
 - `js/engine.js`: simulação (grafo do unifilar, energização, regras, mortes e infrações). Não depende do DOM.
@@ -52,6 +63,7 @@ As zonas de risco e controlada são **invisíveis**. O aluno só vê onde elas e
 - `js/ui.js`: interface, diagrama SVG, minijogos (ordem dos grampos de aterramento e sincronoscópio), efeitos.
 - `js/audio.js`: sons sintetizados com WebAudio, sem nenhum arquivo externo.
 - `tests/engine.test.js`: testes do motor (`node --test tests/*.test.js`).
+- `veste-ou-queima/`: jogo 4. `js/kit.js` traz o armário, as tarefas e a avaliação do teste do arco (testados em `tests/veste.test.js`, com uma solução perfeita por tarefa) e `js/veste.js` a interface.
 - `zona-morta/`: jogo 3. `js/geo.js` traz a tabela de raios, a pontuação e a geometria do munck (testados em `tests/zona.test.js`, incluindo um teste que prova que cada missão tem solução), `js/missions.js` as missões e `js/zona.js` a interface.
 - `para-ou-libera/`: jogo 2. `js/cards.js` traz as cartas, `js/core.js` as regras (testadas em `tests/para.test.js`) e `js/para.js` a interface.
 
